@@ -2,10 +2,12 @@ from urllib.request import Request, urlopen
 
 from bs4 import BeautifulSoup, element
 
+DEBUG = False
+
 # ===== Dictionary Links =====
 MERRIAM_WEBSTER = 'https://www.merriam-webster.com/dictionary/'
 CAMBRIDGE = 'https://dictionary.cambridge.org/dictionary/english/'
-DICT_CC = 'https://www.dict.cc/?s='
+DICT_CC = 'https://en-de.dict.cc/?s='
 # ============================
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0'}
@@ -16,10 +18,14 @@ def trim_numbers(string):
             return string[i:]
     return string
 
-def scrape_merriam_webster(search_string: str):
+async def scrape_merriam_webster(search_string: str):
+    search_string = search_string.replace(' ', '+')
+
+    if search_string.startswith('to+'):
+        search_string = search_string[3:]
+
     url = MERRIAM_WEBSTER + search_string
-    html = urlopen(url).read().decode('utf-8')
-    #html = open('barbecue.txt').read()
+    html = urlopen(url).read().decode('utf-8') if not DEBUG else open('test_merriam.txt').read()
     soup = BeautifulSoup(html)
     entries = soup.find_all("div", id=lambda v: v and v.startswith("dictionary-entry-"))
     
@@ -39,12 +45,13 @@ def scrape_merriam_webster(search_string: str):
         ret.append((pos, meanings))
     return ret
 
-def scrape_dict_cc(search_string: str):
+async def scrape_dict_cc(search_string: str):
+    search_string = search_string.replace(' ', '+')
+
     url = DICT_CC + search_string
     req = Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0')
-    html = urlopen(req).read().decode('utf-8')
-    #html = open('dict_cc.txt').read()
+    html = urlopen(req).read().decode('utf-8') if not DEBUG else open('test_dict_cc.txt').read()
     soup = BeautifulSoup(html)
     entries = soup.find_all("tr", id=lambda v: v and v.startswith("tr"))
 

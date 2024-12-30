@@ -6,6 +6,11 @@ A simple and easy-to-use web application built with NiceGUI that looks up a word
 
 ## Planned Features
 - [ ] layout and design improvements
+    - [ ] larger card height
+    - [ ] hide all of the `{}` and `[]` stuff, unless mouse is hovering over the entry 
 - [ ] option to select different dictionaries
-- [ ] ability to select several meanings and translations
+- [x] ability to select several meanings and translations
+    - *done: 30.12.24*
 - [ ] ability to edit the cards in the list, as well as to rearrange or delete (some of) them
+- [ ] implement support for Merriam Webster API
+- [ ] different parsing of dict.cc, so that we also get tabs
