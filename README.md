@@ -14,3 +14,6 @@ A simple and easy-to-use web application built with NiceGUI that looks up a word
 - [ ] ability to edit the cards in the list, as well as to rearrange or delete (some of) them
 - [ ] implement support for Merriam Webster API
 - [ ] different parsing of dict.cc, so that we also get tabs
+- [ ] for MerriamWebster: indicate redirections
+    - e.g. typing "prospector" actually yields the results for "prospect," but this fact is hidden in DictionAnki
+- [ ] mark transitive vs. intransitive verbs

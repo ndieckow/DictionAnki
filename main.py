@@ -96,7 +96,7 @@ def select_translation(event):
 
 bababa = None
 async def search(event):
-    global search_time, search_string, selected_translations
+    global search_time, search_string, selected_translations, selected_meanings
 
     if not input_string.strip():
         ui.notify("Please enter a word.")
@@ -116,7 +116,9 @@ async def search(event):
     merriam_webster_results = await scrape_merriam_webster(search_string)
     dict_cc_results = await scrape_dict_cc(search_string)
 
+    # reset
     result_row.clear()
+    selected_meanings = []
 
     tabbies = []
     with result_row:
@@ -150,11 +152,6 @@ async def search(event):
                 translation_table = ui.table(columns=columns, rows=rows).classes('no-shadow').props('dense table-header-class=hidden')
                 translation_table.on('rowClick', select_translation)
                 selected_translations = translation_table.selected
-                """
-                with ui.list().props('dense separator'):
-                    for eng,ger in dict_cc_results:
-                        ui.item(f'{eng} ::: {ger}', on_click=select_translation)
-                """
 
 # =========================================
 
